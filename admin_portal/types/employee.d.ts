@@ -31,3 +31,11 @@ export interface FormErrorEmployee {
   is_active?: string[];
   message?: string[];
 }
+
+export interface Attendance {
+  id: number;
+  employee: Employee;
+  attendance_date: string;
+  attendance_in: Date;
+  attendance_out: Date;
+}

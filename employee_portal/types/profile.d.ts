@@ -41,3 +41,11 @@ export interface FormErrorChangePassword {
   current_password?: string[];
   new_password?: string[];
 }
+
+export interface Attendance {
+  id: number;
+  employee: Profile;
+  attendance_date: string;
+  attendance_in: Date;
+  attendance_out: Date;
+}

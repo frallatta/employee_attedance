@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsEnum, IsNotEmpty } from 'class-validator';
+import { IsEnum, IsInt, IsNotEmpty } from 'class-validator';
 
 export enum AttendanceType {
   'IN',
@@ -9,6 +9,10 @@ export enum AttendanceType {
 export class UpsertAttendanceDto {
   //   @IsNumber()
   @IsNotEmpty()
+  @IsInt()
+  @Transform(({ value }) => {
+    return parseInt(value);
+  })
   employee_id: number;
 
   @IsNotEmpty()

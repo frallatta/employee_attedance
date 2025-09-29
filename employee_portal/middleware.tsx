@@ -1,7 +1,9 @@
 export { default } from "next-auth/middleware";
 
 export const config = {
-  matcher: ["/employee", "/dashboard"],
+  matcher: [
+    // "/employee", "/dashboard"
+  ],
 };
 
 // import { NextResponse, NextRequest } from 'next/server'

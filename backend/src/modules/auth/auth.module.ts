@@ -16,7 +16,7 @@ import { AuthGuard } from './auth.guard';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_AUTH_SECRET'),
-        signOptions: { expiresIn: '3600s' },
+        signOptions: { expiresIn: '12h' },
         global: true,
       }),
     }),

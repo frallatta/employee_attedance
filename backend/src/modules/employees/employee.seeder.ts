@@ -12,7 +12,7 @@ export default class EmployeeSeeder implements Seeder {
   ): Promise<void> {
     const utilsService = new UtilsService();
 
-    await dataSource.query('TRUNCATE "employee" RESTART IDENTITY;');
+    // await dataSource.query('TRUNCATE "employee" RESTART IDENTITY;');
 
     const hashPassword = await utilsService.hashTextData('12345678');
     const repository = dataSource.getRepository(Employee);

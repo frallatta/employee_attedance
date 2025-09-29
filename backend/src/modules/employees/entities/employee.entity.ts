@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { Attendance } from 'src/modules/attendances/entities/attendance.entity';
+import { Attendance } from '../../attendances/entities/attendance.entity';
 import {
   Column,
   CreateDateColumn,

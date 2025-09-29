@@ -3,6 +3,7 @@ import { runSeeders, SeederOptions } from 'typeorm-extension';
 import { config } from 'dotenv';
 import EmployeeSeeder from '../modules/employees/employee.seeder';
 import { Employee } from '../modules/employees/entities/employee.entity';
+import { Attendance } from '../modules/attendances/entities/attendance.entity';
 // import EmployeeSeeder from './employee/employee.seeder';
 
 config();
@@ -16,7 +17,7 @@ config();
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     synchronize: true,
-    entities: [Employee],
+    entities: [Employee, Attendance],
     seeds: [EmployeeSeeder],
   };
 

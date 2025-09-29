@@ -9,6 +9,7 @@ import {
 import { AttendancesService } from './attendances.service';
 import { UpsertAttendanceDto } from './dto/upsert-attendance.dto';
 import { EmployeesService } from '../employees/employees.service';
+import { FilterAttendanceDto } from './dto/filter-attendance.dto';
 
 @Controller('attendances')
 export class AttendancesController {
@@ -18,7 +19,7 @@ export class AttendancesController {
   ) {}
 
   @Post()
-  async attend(@Body() upsertAttendanceDto: UpsertAttendanceDto) {
+  async attend(@Body() upsertAttendanceDto: UpsertAttendanceDto): Promise<any> {
     const employee = await this.employeesService.findOne(
       upsertAttendanceDto.employee_id,
     );
@@ -27,21 +28,18 @@ export class AttendancesController {
       throw new NotFoundException();
     }
 
-    return this.attendancesService.attend(
+    await this.attendancesService.attend(
       employee,
       upsertAttendanceDto.attend_type,
     );
 
-    // return 'OK';
+    return {
+      message: 'Attendance data has been saved.',
+    };
   }
 
   @Get()
-  findAll(
-    @Query('employeeId') employeeId: number,
-    @Query('attendanceDate') attendanceDate: string,
-  ) {
-    console.log(employeeId);
-    console.log(attendanceDate);
-    return this.attendancesService.findAll();
+  findAll(@Query() filter: FilterAttendanceDto) {
+    return this.attendancesService.findAll(filter);
   }
 }

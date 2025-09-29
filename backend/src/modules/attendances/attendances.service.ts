@@ -5,6 +5,7 @@ import { Attendance } from './entities/attendance.entity';
 import { Repository } from 'typeorm';
 import { UtilsService } from '../utils/utils.service';
 import { Employee } from '../employees/entities/employee.entity';
+import { FilterAttendanceDto } from './dto/filter-attendance.dto';
 // import { format } from 'date-fns';
 
 @Injectable()
@@ -15,8 +16,31 @@ export class AttendancesService {
     private readonly utilsService: UtilsService,
   ) {}
 
-  findAll() {
-    return `This action returns all attendances`;
+  async findAll(filter: FilterAttendanceDto): Promise<Attendance[]> {
+    const qb = this.attendanceRepository
+      .createQueryBuilder('attendance')
+      .leftJoinAndSelect('attendance.employee', 'employee');
+
+    if (filter.employeeId) {
+      qb.andWhere('attendance.employee_id = :employee_id', {
+        employee_id: filter.employeeId,
+      });
+    }
+
+    if (filter.attendanceDate) {
+      let arrDate = filter.attendanceDate.split('|');
+      let startDate = new Date(arrDate[0]);
+      let endDate = new Date(arrDate[1]);
+      qb.andWhere(
+        'attendance.attendance_date BETWEEN :startDate AND :endDate',
+        {
+          startDate: startDate,
+          endDate: endDate,
+        },
+      );
+    }
+
+    return qb.getMany();
   }
 
   async attend(employee: Employee, attendanceType: AttendanceType) {

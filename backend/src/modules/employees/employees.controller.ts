@@ -41,11 +41,13 @@ export class EmployeesController {
   }
 
   @Post()
-  async create(
-    @Body() CreateEmployeeDto: CreateEmployeeDto,
-  ): Promise<Employee> {
+  async create(@Body() CreateEmployeeDto: CreateEmployeeDto): Promise<any> {
     try {
-      return this.employeeService.createEmployee(CreateEmployeeDto);
+      await this.employeeService.createEmployee(CreateEmployeeDto);
+
+      return {
+        message: 'Employee data has been created.',
+      };
     } catch (e) {
       const message: string = e.detail ?? e.message;
       throw new HttpException(message, HttpStatus.METHOD_NOT_ALLOWED);
