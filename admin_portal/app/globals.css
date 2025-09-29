@@ -1,0 +1,54 @@
+@layer theme, base, components, primereact, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+
+@import "primereact/resources/themes/soho-light/theme.css" layer(primereact);
+@import "./styles/layout/topbar.css";
+@import "./styles/layout/main.css";
+@import "./styles/layout/topbar.css";
+@import "./styles/layout/menu.css";
+@import "./styles/layout/config.css";
+@import "./styles/layout/content.css";
+@import "./styles/layout/footer.css";
+@import "./styles/layout/responsive.css";
+@import "./styles/layout/utils.css";
+@import "./styles/layout/typography.css";
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.logo {
+  height: 6em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
