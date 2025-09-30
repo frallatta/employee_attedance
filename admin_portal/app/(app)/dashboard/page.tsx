@@ -1,43 +1,34 @@
-"use client";
-import { useState, useRef } from "react";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import AppTopbar from "@/layout/AppTopbar";
-import { AppTopbarRef } from "@/types";
-
+import React from "react";
+import axiosServer from "@/lib/axiosServer";
 import "primeicons/primeicons.css";
+import { format } from "date-fns";
+import DashboardTemplate from "./DashboardTemplate";
 
-export default function DashboardPage() {
-  const [count, setCount] = useState(0);
-  const topbarRef = useRef<AppTopbarRef>(null);
+const EmployeePage = async () => {
+  const resEmployeeData = await axiosServer.get("/employees/");
+  const listEmployeeData = resEmployeeData.data;
+  const currentDate = format(new Date(), "yyyy-MM-dd");
+
+  const resAttendanceData = await axiosServer.get("/attendances/", {
+    params: {
+      attendanceDate: `${currentDate}|${currentDate}`,
+    },
+  });
+  const attendanceData = resAttendanceData.data;
+
   return (
-    <>
-      <div>
-        {/* <p className="mb-10">
-          <a href="https://nextjs.org/" target="_blank">
-            <img src="/next.svg" className="logo inline-block animate-spin [animation-duration:5s]" alt="Next.JS logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src="/react.svg" className="logo react inline-block" alt="React logo" />
-          </a>
-        </p>
-        <h1>Next.js + PrimeReact + TailwindCSS</h1>
-        <div>
-          <h2>Demo app showing PrimeReact + Tailwind CSS in unstyled mode</h2>
-        </div> */}
+    <div className="grid grid-cols-12 gap-4">
+      <div className="col-span-12 md:col-span-12">
         <div className="card">
-          <Button
-            icon="pi pi-plus"
-            className="mr-2"
-            label="Increment"
-            onClick={() => setCount((count) => count + 1)}
-          ></Button>
-          <InputText value={count.toString()} />
+          <h5>Dashboard</h5>
+          <DashboardTemplate
+            attendanceCount={attendanceData.length}
+            employeeCount={listEmployeeData.length}
+          />
         </div>
-        <p className="read-the-docs">
-          Click on the Next and React logos to learn more
-        </p>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default EmployeePage;
