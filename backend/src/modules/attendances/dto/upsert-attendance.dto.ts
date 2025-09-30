@@ -10,7 +10,7 @@ export class UpsertAttendanceDto {
   //   @IsNumber()
   @IsNotEmpty()
   @IsInt()
-  @Transform(({ value }) => {
+  @Transform(({ value }: { value: string }) => {
     return parseInt(value);
   })
   employee_id: number;

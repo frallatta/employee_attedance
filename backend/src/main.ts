@@ -8,6 +8,7 @@ import {
 import { ValidationError } from 'class-validator';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
@@ -15,8 +16,19 @@ async function bootstrap() {
     rawBody: true,
   });
 
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [process.env.RABBITMQ_URL || 'amqp://localhost:5672'],
+      queue: process.env.RABBITMQ_QUEUE || 'my_queue',
+      queueOptions: { durable: true },
+    },
+  });
+
   const allowedOrigins = [
-    'http://127.0.0.1:3010', // Example: your local frontend
+    'http://localhost:3010',
+    'http://localhost:3011',
+    'http://127.0.0.1:3010',
     'http://127.0.0.1:3011',
   ];
   app.enableCors({
@@ -62,7 +74,7 @@ async function bootstrap() {
       // disableErrorMessages: true,
     }),
   );
-
+  await app.startAllMicroservices();
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

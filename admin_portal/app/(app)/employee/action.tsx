@@ -2,7 +2,6 @@
 import axiosServer from "@/lib/axiosServer";
 import { errorRequestHandler } from "@/lib/utils";
 import { FormEmployee } from "@/types/employee";
-import { FormItemData, FormOptionList, ItemData } from "@/types/item";
 
 const createEmployee = async (formData: FormEmployee): Promise<any> => {
   try {

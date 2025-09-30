@@ -35,7 +35,7 @@ export default function Login({ callbackUrl }: { callbackUrl: string }) {
       if (!result.success) {
         const validateError: FormErrorLogin = result.errorData;
         setErrors(validateError);
-        if (validateError.message) {
+        if (result.errorMessage) {
           toastRef.current.show({
             severity: "error",
             summary: "Failed",

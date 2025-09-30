@@ -9,7 +9,7 @@ const changePhoneNumber = async (
   try {
     const formData = {
       phone_number: phoneNumber,
-      is_employee_request: true,
+      is_employee_request: "true",
     };
     var response = await axiosServer.put(`/employees/${employeeId}`, formData);
     const result: string = response.data.message;

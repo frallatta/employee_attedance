@@ -18,6 +18,10 @@ export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) {
   image_file_url?: string;
 
   @IsOptional()
+  @IsString()
+  fcm_token?: string;
+
+  @IsOptional()
   @IsBoolean()
   @Transform(({ value }) => {
     if (value) {

@@ -101,13 +101,11 @@ export class EmployeesController {
       }),
     )
     file: Express.Multer.File,
+    @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
     const employee = await this.findOrFail(id);
-    const updateEmployeeDto: UpdateEmployeeDto = {
-      image_file_url: `uploads/${file.filename}`,
-      is_active: employee.is_active,
-    };
 
+    updateEmployeeDto.image_file_url = `uploads/${file.filename}`;
     await this.employeeService.updateEmployee(employee, updateEmployeeDto);
 
     return {
@@ -135,9 +133,11 @@ export class EmployeesController {
 
       const updateEmployeeDto: UpdateEmployeeDto = {
         password: changePasswordEmployeeDto.new_password,
+        is_employee_request: true,
       };
 
       await this.employeeService.updateEmployee(employee, updateEmployeeDto);
+
       return {
         message: `Password has been changed.`,
       };

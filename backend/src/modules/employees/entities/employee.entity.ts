@@ -40,6 +40,11 @@ export class Employee {
   @Column()
   is_admin: boolean;
 
+  @Column({
+    nullable: true,
+  })
+  fcm_token: string;
+
   @Column({ default: true })
   is_active: boolean;
 

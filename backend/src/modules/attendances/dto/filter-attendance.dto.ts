@@ -8,7 +8,7 @@ export class FilterAttendanceDto {
 
   @IsOptional()
   @IsInt()
-  @Transform(({ value }) => {
+  @Transform(({ value }: { value: string }) => {
     return parseInt(value);
   })
   employeeId: number;

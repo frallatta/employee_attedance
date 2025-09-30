@@ -512,6 +512,7 @@ const ContainerChangeImage = function ({
         try {
           var formData = new FormData();
           formData.append("_method", "put");
+          formData.append("is_employee_request", "true");
           formData.append("file", file);
           const result = await changeImage(dataForm.id, formData);
           setLayoutLoading(false);

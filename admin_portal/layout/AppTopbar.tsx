@@ -16,10 +16,19 @@ import { OverlayPanel } from "primereact/overlaypanel";
 import { Badge } from "primereact/badge";
 import { Menu } from "primereact/menu";
 import refreshSession from "@/lib/utils";
+import {
+  listenForForegroundMessages,
+  requestFcmToken,
+} from "@/lib/firebase/fcm-client";
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
-  const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } =
-    useContext(LayoutContext);
+  const {
+    toastRef,
+    layoutConfig,
+    layoutState,
+    onMenuToggle,
+    showProfileSidebar,
+  } = useContext(LayoutContext);
   const menubuttonRef = useRef(null);
   const topbarmenuRef = useRef(null);
   const topbarmenubuttonRef = useRef(null);
@@ -35,6 +44,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
 
   useEffect(() => {
     updateSession();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const itemRenderer = (item: any) => (
@@ -82,6 +92,27 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
       template: itemRenderer,
     },
   ];
+
+  useEffect(() => {
+    const initializeFCM = async () => {
+      listenForForegroundMessages(toastRef);
+
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/firebase-messaging-sw.js")
+          .then((registration) => {
+            console.log("Service Worker registered:", registration);
+          })
+          .catch((err) => {
+            console.error("Service Worker registration failed:", err);
+          });
+      }
+
+      const fcmToken = await requestFcmToken();
+      console.log(fcmToken);
+    };
+    initializeFCM();
+  }, [toastRef]);
 
   return (
     <div className="layout-topbar">
