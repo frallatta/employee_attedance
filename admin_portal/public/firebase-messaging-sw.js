@@ -6,12 +6,12 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: "AIzaSyB4L_J3zXEeFoJgHqLphYA12cJhh-TlUuo",
-  authDomain: "employee-attendance-30e1f.firebaseapp.com",
-  projectId: "employee-attendance-30e1f",
-  storageBucket: "employee-attendance-30e1f.firebasestorage.app",
-  messagingSenderId: "652911853167",
-  appId: "1:652911853167:web:750f86a46110b25964579a",
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: "",
 });
 
 const messaging = firebase.messaging();
